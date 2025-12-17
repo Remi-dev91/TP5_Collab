@@ -32,6 +32,10 @@ int main() {
     string commande;
 
     // Boucle de lecture
+    cout << "------- Debut du plan d'execution ------"<<endl;
+    journal << "============================================" <<endl;
+    journal << "Format : Action + Paramètres "<<endl;
+    journal << "============================================" <<endl;
     while (fichier >> commande){
 
         if (commande == "DEPLACER"){
@@ -46,10 +50,16 @@ int main() {
 
             plan.ajouter(new Deplacer(dx,dy,dz));
             journal << commande << endl;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "dx : "<< dx << "dy : " << dy << "dz : " << dz<<endl;
 
         } else if (commande == "OUVRIR_PINCE"){
             plan.ajouter(new OuvrirPince());
             journal << commande << endl;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande<<endl;
 
         } else if(commande == "FERMER_PINCE"){
             plan.ajouter(new FermerPince());
@@ -57,6 +67,9 @@ int main() {
 
         } else if (commande == "ALLER_A") {
             double dx, dy, dz;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande<<endl;
 
             if (!(fichier >> dx >> dy >> dz)) {
                 std::cerr << "Erreur : paramètres invalides pour ALLER_A\n";
@@ -66,6 +79,9 @@ int main() {
             }
             plan.ajouter(new AllerA(dx,dy,dz));
             journal << commande << endl;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "dx : "<< dx << "dy : " << dy << "dz : " << dz<<endl;
 
         } else if (commande == "POSEROBJET") {
             double dx, dy, dz;
@@ -78,10 +94,16 @@ int main() {
             }
             plan.ajouter(new PoserObjet(dx,dy,dz));
             journal << commande << endl;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "dx : "<< dx << "dy : " << dy << "dz : " << dz<<endl;
 
         } else if (commande == "ATTENDRE_2") {
             plan.ajouter(new Attendre(2));
             journal << commande << endl;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande<<endl;
 
         } else if (commande == "ROTATION") {
             int angleRobot;
@@ -94,6 +116,9 @@ int main() {
             }
             plan.ajouter(new Rotation(angleRobot));
             journal << commande << endl;
+            journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "angle de rotation : "<< angleRobot <<endl;
 
         } else {
             cout << "Commande inconnue : " << commande << endl;
@@ -105,8 +130,12 @@ int main() {
     journal.close();
 
     plan.executer(ctx);
+    cout << "-------- Fin du plan d'execution --------"<<endl;
+
+    cout << "\n======== Etat du robot ========"<<endl;
     ctx.afficherPosition();
     plan.nettoyer();
 
+    cout << "==============================="<<endl;
     return 0;
 }
