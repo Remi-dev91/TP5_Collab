@@ -46,6 +46,8 @@ int main() {
     ContexteRobot ctx(0,0,0,false);
     SequenceActions plan;
     string commande;
+    cout << "------- Debut du plan d'execution ------"<<endl;
+    journal << "============================================" <<endl;
     while (fichier >> commande){
         if (commande == "DEPLACER"){
             double dx, dy ,dz;
@@ -94,9 +96,15 @@ int main() {
             cout << "Commande inconnue : " << commande << std::endl;
         }
     }
+
     journal.close();
     plan.executer(ctx);
+    cout << "-------- Fin du plan d'execution --------"<<endl;
+
+    cout << "\n======== Etat du robot ========"<<endl;
     ctx.afficherPosition();
     plan.nettoyer();
+
+    cout << "==============================="<<endl;
     return 0;
 }
