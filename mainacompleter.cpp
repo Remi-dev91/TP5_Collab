@@ -48,22 +48,27 @@ int main() {
     string commande;
     cout << "------- Debut du plan d'execution ------"<<endl;
     journal << "============================================" <<endl;
+    journal << "Format : Action + Paramètres "<<endl;
+    journal << "============================================" <<endl;
     while (fichier >> commande){
         if (commande == "DEPLACER"){
             double dx, dy ,dz;
             fichier >> dx >> dy >> dz;
             plan.ajouter(new Deplacer(dx,dy,dz));
             journal.seekp(0, ios::end);
-            journal<<commande<<endl;
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "dx : "<< dx << "dy : " << dy << "dz : " << dz<<endl;
 
         }else if (commande == "OUVRIR_PINCE"){
             plan.ajouter(new OuvrirPince());
             journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
             journal<<commande<<endl;
 
         }else if(commande == "FERMER_PINCE"){
             plan.ajouter(new FermerPince());
             journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
             journal<<commande<<endl;
 
         }else if (commande == "ALLER_A") {
@@ -71,18 +76,21 @@ int main() {
             fichier >> dx >> dy >> dz;
             plan.ajouter(new AllerA(dx,dy,dz));
             journal.seekp(0, ios::end);
-            journal<<commande<<endl;
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "dx : "<< dx << "dy : " << dy << "dz : " << dz<<endl;
 
         }else if (commande == "POSEROBJET") {
             double dx, dy ,dz;
             fichier >> dx >> dy >> dz;
             plan.ajouter(new PoserObjet(dx,dy,dz));
             journal.seekp(0, ios::end);
-            journal<<commande<<endl;
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "dx : "<< dx << "dy : " << dy << "dz : " << dz<<endl;
 
         }else if (commande == "ATTENDRE_2") {
             plan.ajouter(new Attendre(2));
             journal.seekp(0, ios::end);
+            journal << "Action ecécutée : ";
             journal<<commande<<endl;
 
         }else if (commande == "ROTATION") {
@@ -90,7 +98,8 @@ int main() {
             fichier >> angleRobot;
             plan.ajouter(new Rotation(angleRobot));
             journal.seekp(0, ios::end);
-            journal<<commande<<endl;
+            journal << "Action ecécutée : ";
+            journal<<commande << "  " << "angle de rotation : "<< angleRobot <<endl;
 
         }else {
             cout << "Commande inconnue : " << commande << std::endl;
